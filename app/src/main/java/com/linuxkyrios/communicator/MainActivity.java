@@ -21,9 +21,17 @@ public class MainActivity extends Activity {
         String messageText = messageView.getText().toString();
         // Creating instance of intent class and assigning ReceiveMessageActivity as parameter,
         // then starting this activity
-        Intent intent = new Intent(this, ReceiveMessageActivity.class);
+        //Intent intent = new Intent(this, ReceiveMessageActivity.class);
         //This part of code creates intent and add  a text to it. Constant used to assign information
-        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, messageText);
-        startActivity(intent);
+        //intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, messageText);
+        //Code below creates intent that use sending action with other apps
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, messageText);
+        // Getting chooser title
+        String chooserTitle = getString(R.string.chooser);
+        // Creating new intent to guarantee, that user will always be asked about app to use
+        Intent chosenIntent = Intent.createChooser(intent, chooserTitle);
+        startActivity(chosenIntent);
     }
 }
